@@ -6,12 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [calcService, setCalcService] = useState('');
   const [calcArea, setCalcArea] = useState('');
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
     {
@@ -125,23 +127,94 @@ const Index = () => {
             <a href="#reviews" className="text-foreground hover:text-primary transition-colors">Отзывы</a>
             <a href="#contacts" className="text-foreground hover:text-primary transition-colors">Контакты</a>
           </div>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="bg-primary hover:bg-primary/90">
-                <Icon name="Phone" className="mr-2" size={18} />
-                Вызвать мастера
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Вызов мастера</DialogTitle>
-                <DialogDescription>
-                  Заполните форму и мы свяжемся с вами в ближайшее время
-                </DialogDescription>
-              </DialogHeader>
-              <CallMasterForm />
-            </DialogContent>
-          </Dialog>
+          <div className="flex items-center gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-primary hover:bg-primary/90 hidden md:flex">
+                  <Icon name="Phone" className="mr-2" size={18} />
+                  Вызвать мастера
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Вызов мастера</DialogTitle>
+                  <DialogDescription>
+                    Заполните форму и мы свяжемся с вами в ближайшее время
+                  </DialogDescription>
+                </DialogHeader>
+                <CallMasterForm />
+              </DialogContent>
+            </Dialog>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Icon name="Menu" size={24} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center gap-2">
+                    <Icon name="Wrench" className="text-primary" size={24} />
+                    МастерСочи
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-6 mt-8">
+                  <a 
+                    href="#services" 
+                    className="text-lg text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Услуги
+                  </a>
+                  <a 
+                    href="#calculator" 
+                    className="text-lg text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Калькулятор
+                  </a>
+                  <a 
+                    href="#portfolio" 
+                    className="text-lg text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Портфолио
+                  </a>
+                  <a 
+                    href="#reviews" 
+                    className="text-lg text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Отзывы
+                  </a>
+                  <a 
+                    href="#contacts" 
+                    className="text-lg text-foreground hover:text-primary transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Контакты
+                  </a>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="bg-primary hover:bg-primary/90 w-full" size="lg">
+                        <Icon name="Phone" className="mr-2" size={20} />
+                        Вызвать мастера
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Вызов мастера</DialogTitle>
+                        <DialogDescription>
+                          Заполните форму и мы свяжемся с вами в ближайшее время
+                        </DialogDescription>
+                      </DialogHeader>
+                      <CallMasterForm />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </nav>
       </header>
 
